@@ -1,0 +1,29 @@
+{
+  "name": "saucedemo-playwright-bdd",
+  "version": "1.0.0",
+  "description": "Playwright + BDD (Gherkin/Cucumber) end-to-end test suite for SauceDemo, using the Page Object Model.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx bddgen && npx playwright test",
+    "test:headed": "npx bddgen && npx playwright test --headed",
+    "report": "npx playwright show-report"
+  },
+  "keywords": [
+    "playwright",
+    "typescript",
+    "cucumber",
+    "bdd",
+    "gherkin",
+    "test-automation",
+    "page-object-model"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@cucumber/cucumber": "^12.9.0",
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.3.0",
+    "playwright-bdd": "^9.2.0"
+  }
+}

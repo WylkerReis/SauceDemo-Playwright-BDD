@@ -1,0 +1,14 @@
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+# playwright-bdd generated test files
+/.features-gen/
+
+# Claude Code local session state
+/.claude/
