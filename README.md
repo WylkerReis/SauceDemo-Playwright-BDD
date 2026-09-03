@@ -10,10 +10,22 @@ This mirrors the practice used in my Cypress + Cucumber/BDD suite ([Desafio-Auto
 
 SauceDemo is a public e-commerce practice site with login, a product catalog, cart, and checkout — flows that map closely to what an automation suite looks like on a real project. The suite covers:
 
-- **Login** — valid credentials, a locked-out account, and an invalid password.
-- **Cart** — adding one or several products and removing a product, all verified against the cart badge/contents.
-- **Sorting** — reordering the product catalog by price and by name.
-- **Checkout** — a full end-to-end purchase, and a required-field validation error.
+- **Login** — valid credentials, a locked-out account, an invalid password, and blank-field validation.
+- **Session** — logging out, and the route guard that blocks direct access to the inventory page when signed out.
+- **Cart** — adding one or several products, removing a product (down to an empty cart), and the "Continue Shopping" link — all verified against the cart badge/contents.
+- **Sorting** — reordering the product catalog by price and by name, in both directions.
+- **Checkout** — a full end-to-end purchase, required-field validation for every field, canceling from either step, and the order review's price math (subtotal + tax = total).
+- **Known issues** — SauceDemo ships several seeded "problem" accounts (`problem_user`, `error_user`, `performance_glitch_user`) with real, reproducible defects. The suite exercises them and documents 5 confirmed bugs — duplicate product images, a broken sort dropdown, a checkout form that rejects a valid last name, a "Finish" button that silently fails to complete the order, and a ~5s login regression — each tagged `@fail` (`test.fail()`) so they're re-verified on every run without breaking CI. See [features/known-issues.feature](features/known-issues.feature) and the full write-up in [docs/bug-report.md](docs/bug-report.md).
+
+## Documentation
+
+This README covers installation, execution, and structure. The rest of the QA process lives in dedicated documents:
+
+- [docs/test-plan.md](docs/test-plan.md) — objective, scope, test approach/techniques, environment, tools, and risks.
+- [docs/execution-report.md](docs/execution-report.md) — the latest run's result, scenario by scenario.
+- [docs/bug-report.md](docs/bug-report.md) — each confirmed defect, with severity, Gherkin reproduction steps, and expected vs. actual result.
+
+Evidence (a screenshot and a video per scenario, pass or fail) is captured automatically on every run — see [Running the tests](#running-the-tests) — rather than committed as static files, so it never goes stale.
 
 ## Tech stack
 
@@ -43,11 +55,11 @@ Scenario: Successful login with valid credentials
 
 ```bash
 npm install
-npx playwright install
+npx playwright install chrome
 npm test
 ```
 
-`npm test` runs `bddgen` (compiles the feature files into runnable Playwright specs under `.features-gen/`) followed by `playwright test`, across Chromium, Firefox, and WebKit.
+`npm test` runs `bddgen` (compiles the feature files into runnable Playwright specs under `.features-gen/`) followed by `playwright test`, against Google Chrome (the only configured project — see [playwright.config.ts](playwright.config.ts)).
 
 Other useful commands:
 

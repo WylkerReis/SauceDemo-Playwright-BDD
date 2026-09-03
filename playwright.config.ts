@@ -29,23 +29,18 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+
+    /* Evidence per scenario — one screenshot and one video per test, pass or fail,
+       embedded into the HTML report (and thus into the playwright-report CI artifact). */
+    screenshot: 'on',
+    video: 'on',
   },
 
-  /* Configure projects for major browsers */
+  /* Run against Google Chrome only */
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
-
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      name: 'chrome',
+      use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     },
   ],
 });

@@ -20,3 +20,14 @@ Feature: Shopping cart
     When I open the cart
     And I remove "Sauce Labs Backpack" from the cart
     Then my cart should not contain "Sauce Labs Backpack"
+
+  Scenario: Removing the last product hides the cart badge
+    Given I add "Sauce Labs Backpack" to the cart
+    And I open the cart
+    When I remove "Sauce Labs Backpack" from the cart
+    Then the cart badge should not be visible
+
+  Scenario: Continue shopping returns to the product catalog
+    Given I open the cart
+    When I continue shopping
+    Then I should see the inventory page
