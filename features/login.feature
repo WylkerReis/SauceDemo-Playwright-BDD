@@ -17,3 +17,11 @@ Feature: Login
   Scenario: Login fails with an incorrect password
     When I log in with username "standard_user" and password "wrong_password"
     Then I should see an error message "Epic sadface: Username and password do not match any user in this service"
+
+  Scenario: Login fails when both username and password are blank
+    When I log in with username "" and password ""
+    Then I should see an error message "Epic sadface: Username is required"
+
+  Scenario: Login fails when password is blank
+    When I log in with username "standard_user" and password ""
+    Then I should see an error message "Epic sadface: Password is required"

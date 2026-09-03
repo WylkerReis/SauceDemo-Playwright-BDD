@@ -22,3 +22,17 @@ Then('the products should be displayed in descending name order', async ({ page 
   const sorted = [...names].sort((a, b) => b.localeCompare(a));
   expect(names).toEqual(sorted);
 });
+
+Then('the products should be displayed in ascending name order', async ({ page }) => {
+  const inventoryPage = new InventoryPage(page);
+  const names = await inventoryPage.getDisplayedNames();
+  const sorted = [...names].sort((a, b) => a.localeCompare(b));
+  expect(names).toEqual(sorted);
+});
+
+Then('the products should be displayed in descending price order', async ({ page }) => {
+  const inventoryPage = new InventoryPage(page);
+  const prices = await inventoryPage.getDisplayedPrices();
+  const sorted = [...prices].sort((a, b) => b - a);
+  expect(prices).toEqual(sorted);
+});

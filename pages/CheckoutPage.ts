@@ -10,6 +10,12 @@ export class CheckoutPage extends BasePage {
 
   // Step two: overview
   readonly finishButton: Locator;
+  readonly subtotalLabel: Locator;
+  readonly taxLabel: Locator;
+  readonly totalLabel: Locator;
+
+  // Shared: both the information and overview steps have a cancel button
+  readonly cancelButton: Locator;
 
   // Step three: confirmation
   readonly confirmationHeader: Locator;
@@ -21,6 +27,10 @@ export class CheckoutPage extends BasePage {
     this.postalCodeInput = page.locator('[data-test="postalCode"]');
     this.continueButton = page.locator('[data-test="continue"]');
     this.finishButton = page.locator('[data-test="finish"]');
+    this.subtotalLabel = page.locator('[data-test="subtotal-label"]');
+    this.taxLabel = page.locator('[data-test="tax-label"]');
+    this.totalLabel = page.locator('[data-test="total-label"]');
+    this.cancelButton = page.locator('[data-test="cancel"]');
     this.confirmationHeader = page.locator('.complete-header');
   }
 
@@ -35,7 +45,21 @@ export class CheckoutPage extends BasePage {
     await this.finishButton.click();
   }
 
-  async getConfirmationMessage(): Promise<string> {
-    return (await this.confirmationHeader.textContent()) ?? '';
+  async cancel() {
+    await this.cancelButton.click();
+  }
+
+  /** Parses the "Item total: $X" / "Tax: $X" / "Total: $X" labels on the order review step. */
+  async getPriceSummary(): Promise<{ subtotal: number; tax: number; total: number }> {
+    const parse = async (locator: Locator) => {
+      const text = (await locator.textContent()) ?? '';
+      const match = text.match(/\$([\d.]+)/);
+      return match ? Number(match[1]) : NaN;
+    };
+    return {
+      subtotal: await parse(this.subtotalLabel),
+      tax: await parse(this.taxLabel),
+      total: await parse(this.totalLabel),
+    };
   }
 }

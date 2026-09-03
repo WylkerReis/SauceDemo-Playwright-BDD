@@ -23,7 +23,22 @@ When('I finish the checkout', async ({ page }) => {
   await checkoutPage.finish();
 });
 
+When('I cancel the checkout', async ({ page }) => {
+  const checkoutPage = new CheckoutPage(page);
+  await checkoutPage.cancel();
+});
+
 Then('I should see the confirmation message {string}', async ({ page }, message: string) => {
   const checkoutPage = new CheckoutPage(page);
   await expect(checkoutPage.confirmationHeader).toHaveText(message);
+});
+
+Then('I should see the cart page', async ({ page }) => {
+  await expect(page).toHaveURL(/cart\.html/);
+});
+
+Then('the order total should equal the subtotal plus tax', async ({ page }) => {
+  const checkoutPage = new CheckoutPage(page);
+  const { subtotal, tax, total } = await checkoutPage.getPriceSummary();
+  expect(total).toBeCloseTo(subtotal + tax, 2);
 });

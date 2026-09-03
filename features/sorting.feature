@@ -13,3 +13,11 @@ Feature: Product sorting
   Scenario: Sorting products by name, Z to A
     When I sort products by "Name (Z to A)"
     Then the products should be displayed in descending name order
+
+  Scenario: Sorting products by name, A to Z
+    When I sort products by "Name (A to Z)"
+    Then the products should be displayed in ascending name order
+
+  Scenario: Sorting products by price, high to low
+    When I sort products by "Price (high to low)"
+    Then the products should be displayed in descending price order
