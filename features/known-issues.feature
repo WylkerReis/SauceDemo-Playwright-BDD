@@ -3,12 +3,6 @@ Feature: Known application defects
   I want automated coverage of SauceDemo's seeded problem accounts
   So that real, reproducible defects stay documented and are re-verified on every run
 
-  # Each scenario below asserts the behavior a customer would reasonably expect.
-  # It is tagged @fail because the underlying defect is a known, live bug in the
-  # application (not a flaky test) — the scenario is expected to fail until
-  # SauceDemo fixes it. If one of these ever starts passing, that's a signal the
-  # defect was fixed and the scenario (and its @fail tag) should be revisited.
-
   @fail
   Scenario: Product catalog images should be unique per product
     Given I am logged in as "problem_user"

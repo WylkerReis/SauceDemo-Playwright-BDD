@@ -25,7 +25,6 @@ export class InventoryPage {
     this.logoutLink = page.locator('#logout_sidebar_link');
   }
 
-  /** Navigates straight to the inventory URL, bypassing login — used to verify the route guard. */
   async gotoDirectly() {
     await this.page.goto('/inventory.html');
   }
